@@ -32,7 +32,7 @@ def load_model(model_name):
 
 def main():
 
-    st.title("Transformers Interpet Demo App")
+    st.title("Zero Shot Classifier Interpetation Demo App")
 
     #image = Image.open("./images/tight@1920x_transparent.png")
     #st.sidebar.image(image, use_column_width=True)
