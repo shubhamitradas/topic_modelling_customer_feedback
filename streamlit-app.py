@@ -33,6 +33,7 @@ def load_model(model_name):
 def main():
 
     st.title("Zero Shot Classifier Interpetation Demo App")
+    st.text("This is based on https://share.streamlit.io/cdpierse/transformers-interpret-streamlit/main/app.py")
 
     #image = Image.open("./images/tight@1920x_transparent.png")
     #st.sidebar.image(image, use_column_width=True)
@@ -46,9 +47,9 @@ def main():
     # uncomment the options below to test out the app with a variety of classification models.
     models = {
      
-        "typeform/distilbert-base-uncased-mnli": "DistilBERT model finetuned on MNLI. he model is not case-sensitive.",
+        "typeform/distilbert-base-uncased-mnli": "DistilBERT model finetuned on MNLI. The model is not case-sensitive.",
         # "ProsusAI/finbert": "BERT model finetuned to predict sentiment of financial text. Finetuned on Financial PhraseBank data. Predicts positive/negative/neutral.",
-        "typeform/squeezebert-mnli": "DistilBERT Model to classify a business description into one of 62 industry tags."
+        "typeform/squeezebert-mnli": ""
        
     }
     model_name = st.sidebar.selectbox(
