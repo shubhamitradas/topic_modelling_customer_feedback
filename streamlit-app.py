@@ -103,7 +103,7 @@ def main():
                     internal_batch_size=2,
                 )
             else:
-                word_attributions = cls_explainer(
+                word_attributions = zero_shot_explainer(
                     text, embedding_type=emb_type_num, internal_batch_size=2
                 )
 
