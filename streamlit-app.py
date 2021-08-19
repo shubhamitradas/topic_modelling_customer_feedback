@@ -71,7 +71,7 @@ def main():
         
     labels = ['technologie','sport','space','medical','historical','graphics','food','entertainment','automation','game','Program','Computer','universe','politics','medicative','ancient','war','Archeology','Paleontologist','visuals','diet','recipe','health','nutrition','movie','TV','Comedy','Opera']  
 
-    explanation_classes = ["predicted"] + labels)
+    explanation_classes = ["predicted" + labels)
     explanation_class_choice = st.sidebar.selectbox(
         "Explanation class: The class you would like to explain output with respect to.",
         explanation_classes,
