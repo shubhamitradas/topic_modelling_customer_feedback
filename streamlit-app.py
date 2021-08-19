@@ -98,13 +98,13 @@ def main():
             if explanation_class_choice != "predicted":
                 word_attributions = zero_shot_explainer(
                     text,
-                    class_name=explanation_class_choice,
+                    labels=explanation_class_choice,
                     embedding_type=emb_type_num,
                     internal_batch_size=2,
                 )
             else:
                 word_attributions = zero_shot_explainer(
-                    text, embedding_type=emb_type_num, internal_batch_size=2
+                    text, labels = labels,embedding_type=emb_type_num, internal_batch_size=2
                 )
 
         if word_attributions:
