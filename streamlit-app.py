@@ -25,7 +25,7 @@ def print_memory_usage():
 @st.cache(allow_output_mutation=True, suppress_st_warning=True, max_entries=1)
 def load_model(model_name):
     return (
-        ZeroShotClassificationExplainer.from_pretrained(model_name),
+        AutoModelForSequenceClassification.from_pretrained(model_name),
         AutoTokenizer.from_pretrained(model_name),
     )
 
