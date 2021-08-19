@@ -36,11 +36,11 @@ def main():
 
     #image = Image.open("./images/tight@1920x_transparent.png")
     #st.sidebar.image(image, use_column_width=True)
-    st.sidebar.markdown(
-        "Check out the package on [Github](https://github.com/cdpierse/transformers-interpret)"
-    )
-    st.info(
-        "Due to limited resources only low memory models are available. Run this [app locally](https://github.com/cdpierse/transformers-interpret-streamlit) to run the full selection of available models. "
+    #st.sidebar.markdown(
+     #   "Check out the package on [Github](https://github.com/cdpierse/transformers-interpret)"
+    #)
+    #st.info(
+    #    "Due to limited resources only low memory models are available. Run this [app locally](https://github.com/cdpierse/transformers-interpret-streamlit) to run the full selection of available models. "
     )
 
     # uncomment the options below to test out the app with a variety of classification models.
@@ -58,24 +58,11 @@ def main():
   
     model.eval()
     zero_shot_explainer = ZeroShotClassificationExplainer(model=model, tokenizer=tokenizer)
-    if zero_shot_explainer.accepts_position_ids:
-        emb_type_name = st.sidebar.selectbox(
-            "Choose embedding type for attribution.", ["word", "position"]
-        )
-        if emb_type_name == "word":
-            emb_type_num = 0
-        if emb_type_name == "position":
-            emb_type_num = 1
-    else:
-        emb_type_num = 0
-        
-    labels = ['predicted','technologie','sport','space','medical','historical','graphics','food','entertainment','automation','game','Program','Computer','universe','politics','medicative','ancient','war','Archeology','Paleontologist','visuals','diet','recipe','health','nutrition','movie','TV','Comedy','Opera']  
 
-    explanation_classes = labels
-    explanation_class_choice = st.sidebar.selectbox(
-        "Explanation class: The class you would like to explain output with respect to.",
-        explanation_classes,
-    )
+        
+    labels = ['technologie','sport','space','medical','historical','graphics','food','entertainment','automation','game','Program','Computer','universe','politics','medicative','ancient','war','Archeology','Paleontologist','visuals','diet','recipe','health','nutrition','movie','TV','Comedy','Opera']  
+
+
     my_expander = st.expander(
         "Click here for description of models and their tasks"
     )
@@ -95,17 +82,9 @@ def main():
 
         st.text("Output")
         with st.spinner("Interpreting your text (This may take some time)"):
-            if explanation_class_choice != "predicted":
-                word_attributions = zero_shot_explainer(
-                    text,
-                    labels=explanation_class_choice,
-                    embedding_type=emb_type_num,
-                    internal_batch_size=2,
-                )
-            else:
-                word_attributions = zero_shot_explainer(
+              word_attributions = zero_shot_explainer(
                     text, labels = labels,embedding_type=emb_type_num, internal_batch_size=2
-                )
+                    )
 
         if word_attributions:
             word_attributions_expander = st.expander(
