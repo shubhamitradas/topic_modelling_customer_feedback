@@ -33,7 +33,7 @@ def load_model(model_name):
 def main():
 
     st.title("Zero Shot Classifier Interpetation Demo App")
-    st.text("This is based on https://share.streamlit.io/cdpierse/transformers-interpret-streamlit/main/app.py")
+    st.info("This is based on [Transformer-interpret-streamlit](https://github.com/cdpierse/transformers-interpret-streamlit)")
 
     #image = Image.open("./images/tight@1920x_transparent.png")
     #st.sidebar.image(image, use_column_width=True)
@@ -77,7 +77,7 @@ def main():
     # st.info("Max char limit of 350 (memory management)")
     text = st.text_area(
         "Enter text to be interpreted",
-        "I like you, I love you",
+        "In the midst of a challenging year, Britannia relaunches its 40-year-old Milk Bikis formula, complete with retro packaging",
         height=400,
         max_chars=850,
     )
