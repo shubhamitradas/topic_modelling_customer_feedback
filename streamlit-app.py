@@ -48,7 +48,7 @@ def main():
      
         "typeform/distilbert-base-uncased-mnli": "DistilBERT model finetuned on MNLI. he model is not case-sensitive.",
         # "ProsusAI/finbert": "BERT model finetuned to predict sentiment of financial text. Finetuned on Financial PhraseBank data. Predicts positive/negative/neutral.",
-        "cross-encoder/nli-distilroberta-base": "DistilBERT Model to classify a business description into one of 62 industry tags."
+        "typeform/squeezebert-mnli": "DistilBERT Model to classify a business description into one of 62 industry tags."
        
     }
     model_name = st.sidebar.selectbox(
@@ -60,7 +60,7 @@ def main():
     zero_shot_explainer = ZeroShotClassificationExplainer(model=model, tokenizer=tokenizer)
 
         
-    labels = ['technology','sport','space','medical','historical','graphics','food','entertainment','automation','game','Program','Computer','universe','politics','medicative','ancient','war','Archeology','Paleontologist','visuals','diet','recipe','health','nutrition','movie','TV','Comedy','Opera']  
+    labels = ['technology','sport','space','politics','medical','historical','graphics','food','entertainment']
     explanation_classes = labels
     explanation_class_choice = st.sidebar.selectbox(
         "Available categories",
@@ -89,7 +89,8 @@ def main():
               word_attributions = zero_shot_explainer(
                     text, labels = labels,internal_batch_size=2
                     )
-
+        st.text("Predicted Category")
+        st.text(zero_shot_explainer.predicted_label)
         if word_attributions:
             word_attributions_expander = st.expander(
                 "Click here for raw word attributions"
