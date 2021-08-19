@@ -77,7 +77,7 @@ def main():
     # st.info("Max char limit of 350 (memory management)")
     text = st.text_area(
         "Enter text to be interpreted",
-        "In the midst of a challenging year, Britannia relaunches its 40-year-old Milk Bikis formula, complete with retro packaging",
+        "Toyota is to slash worldwide vehicle production by 40% in September because of the global microchip shortage.",
         height=400,
         max_chars=850,
     )
@@ -90,7 +90,7 @@ def main():
               word_attributions = zero_shot_explainer(
                     text, labels = labels,internal_batch_size=2
                     )
-        st.text("Predicted Category")
+        st.text("Predicted Category :")
         st.text(zero_shot_explainer.predicted_label)
         if word_attributions:
             word_attributions_expander = st.expander(
