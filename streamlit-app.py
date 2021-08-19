@@ -60,8 +60,12 @@ def main():
     zero_shot_explainer = ZeroShotClassificationExplainer(model=model, tokenizer=tokenizer)
 
         
-    labels = ['technologie','sport','space','medical','historical','graphics','food','entertainment','automation','game','Program','Computer','universe','politics','medicative','ancient','war','Archeology','Paleontologist','visuals','diet','recipe','health','nutrition','movie','TV','Comedy','Opera']  
-
+    labels = ['technology','sport','space','medical','historical','graphics','food','entertainment','automation','game','Program','Computer','universe','politics','medicative','ancient','war','Archeology','Paleontologist','visuals','diet','recipe','health','nutrition','movie','TV','Comedy','Opera']  
+    explanation_classes = labels
+    explanation_class_choice = st.sidebar.selectbox(
+        "Available categories",
+        explanation_classes,
+    ) 
 
     my_expander = st.expander(
         "Click here for description of models and their tasks"
@@ -83,7 +87,7 @@ def main():
         st.text("Output")
         with st.spinner("Interpreting your text (This may take some time)"):
               word_attributions = zero_shot_explainer(
-                    text, labels = labels,embedding_type=emb_type_num, internal_batch_size=2
+                    text, labels = labels,internal_batch_size=2
                     )
 
         if word_attributions:
