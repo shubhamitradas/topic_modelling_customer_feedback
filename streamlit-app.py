@@ -48,7 +48,7 @@ def main():
      
         "typeform/distilbert-base-uncased-mnli": "DistilBERT model finetuned on MNLI. he model is not case-sensitive.",
         # "ProsusAI/finbert": "BERT model finetuned to predict sentiment of financial text. Finetuned on Financial PhraseBank data. Predicts positive/negative/neutral.",
-        "joeddav/xlm-roberta-large-xnli": "DistilBERT Model to classify a business description into one of 62 industry tags."
+        "cross-encoder/nli-distilroberta-base": "DistilBERT Model to classify a business description into one of 62 industry tags."
        
     }
     model_name = st.sidebar.selectbox(
