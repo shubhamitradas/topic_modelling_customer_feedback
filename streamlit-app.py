@@ -10,7 +10,7 @@ from PIL import Image
 from streamlit import components
 from streamlit.caching import clear_cache
 from transformers import AutoModelForSequenceClassification, AutoTokenizer
-from transformers_interpret import SequenceClassificationExplainer
+from transformers_interpret import ZeroShotClassificationExplainer
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 logging.basicConfig(
@@ -25,14 +25,14 @@ def print_memory_usage():
 @st.cache(allow_output_mutation=True, suppress_st_warning=True, max_entries=1)
 def load_model(model_name):
     return (
-        AutoModelForSequenceClassification.from_pretrained(model_name),
+        ZeroShotClassificationExplainer.from_pretrained(model_name),
         AutoTokenizer.from_pretrained(model_name),
     )
 
 
 def main():
 
-    st.title("Zero Shot Classifier Interpetation Demo App1")
+    st.title("Zero Shot Classifier Interpetation Demo App")
 
     #image = Image.open("./images/tight@1920x_transparent.png")
     #st.sidebar.image(image, use_column_width=True)
@@ -45,27 +45,20 @@ def main():
 
     # uncomment the options below to test out the app with a variety of classification models.
     models = {
-        # "textattack/distilbert-base-uncased-rotten-tomatoes": "",
-        # "textattack/bert-base-uncased-rotten-tomatoes": "",
-        # "textattack/roberta-base-rotten-tomatoes": "",
-        # "mrm8488/bert-mini-finetuned-age_news-classification": "BERT-Mini finetuned on AG News dataset. Predicts news class (sports/tech/business/world) of text.",
-        # "nateraw/bert-base-uncased-ag-news": "BERT finetuned on AG News dataset. Predicts news class (sports/tech/business/world) of text.",
-        "distilbert-base-uncased-finetuned-sst-2-english": "DistilBERT model finetuned on SST-2 sentiment analysis task. Predicts positive/negative sentiment.",
+     
+        "typeform/distilbert-base-uncased-mnli": "DistilBERT model finetuned on MNLI. he model is not case-sensitive.",
         # "ProsusAI/finbert": "BERT model finetuned to predict sentiment of financial text. Finetuned on Financial PhraseBank data. Predicts positive/negative/neutral.",
-        "sampathkethineedi/industry-classification": "DistilBERT Model to classify a business description into one of 62 industry tags.",
-        "MoritzLaurer/policy-distilbert-7d": "DistilBERT model finetuned to classify text into one of seven political categories.",
-        # # "MoritzLaurer/covid-policy-roberta-21": "(Under active development ) RoBERTA model finetuned to identify COVID policy measure classes ",
-        # "mrm8488/bert-tiny-finetuned-sms-spam-detection": "Tiny bert model finetuned for spam detection. 0 == not spam, 1 == spam",
+        "joeddav/xlm-roberta-large-xnli": "DistilBERT Model to classify a business description into one of 62 industry tags."
+       
     }
     model_name = st.sidebar.selectbox(
-        "Choose a classification model", list(models.keys())
+        "Choose a Zero Shot classification model", list(models.keys())
     )
     model, tokenizer = load_model(model_name)
-    if model_name.startswith("textattack/"):
-        model.config.id2label = {0: "NEGATIVE (0) ", 1: "POSITIVE (1)"}
+  
     model.eval()
-    cls_explainer = SequenceClassificationExplainer(model=model, tokenizer=tokenizer)
-    if cls_explainer.accepts_position_ids:
+    zero_shot_explainer = ZeroShotClassificationExplainer(model=model, tokenizer=tokenizer)
+    if zero_shot_explainer.accepts_position_ids:
         emb_type_name = st.sidebar.selectbox(
             "Choose embedding type for attribution.", ["word", "position"]
         )
@@ -75,13 +68,15 @@ def main():
             emb_type_num = 1
     else:
         emb_type_num = 0
+        
+    labels = ['technologie','sport','space','medical','historical','graphics','food','entertainment','automation','game','Program','Computer','universe','politics','medicative','ancient','war','Archeology','Paleontologist','visuals','diet','recipe','health','nutrition','movie','TV','Comedy','Opera']  
 
-    explanation_classes = ["predicted"] + list(model.config.label2id.keys())
+    explanation_classes = ["predicted"] + labels)
     explanation_class_choice = st.sidebar.selectbox(
         "Explanation class: The class you would like to explain output with respect to.",
         explanation_classes,
     )
-    my_expander = st.beta_expander(
+    my_expander = st.expander(
         "Click here for description of models and their tasks"
     )
     with my_expander:
@@ -101,7 +96,7 @@ def main():
         st.text("Output")
         with st.spinner("Interpreting your text (This may take some time)"):
             if explanation_class_choice != "predicted":
-                word_attributions = cls_explainer(
+                word_attributions = zero_shot_explainer(
                     text,
                     class_name=explanation_class_choice,
                     embedding_type=emb_type_num,
@@ -113,13 +108,13 @@ def main():
                 )
 
         if word_attributions:
-            word_attributions_expander = st.beta_expander(
+            word_attributions_expander = st.expander(
                 "Click here for raw word attributions"
             )
             with word_attributions_expander:
                 st.json(word_attributions)
             components.v1.html(
-                cls_explainer.visualize()._repr_html_(), scrolling=True, height=350
+                zero_shot_explainer.visualize()._repr_html_(), scrolling=True, height=350
             )
 
 
