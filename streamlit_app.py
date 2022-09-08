@@ -50,7 +50,7 @@ def main():
         with st.spinner("Analysing the feedback (This may take some time)"):
               output = backend.get_review_category()
         st.markdown("#Topics extracted from the review:")
-        st.subheader(output)
+        st.text(output)
 
 if __name__ == "__main__":
     main()
