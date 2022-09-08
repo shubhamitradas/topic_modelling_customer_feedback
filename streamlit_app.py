@@ -1,7 +1,3 @@
-import asyncio
-import gc
-import logging
-import os
 
 
 import streamlit as st
@@ -11,18 +7,6 @@ from streamlit.caching import clear_cache
 from ml_backend import ml_backend
 
 
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
-logging.basicConfig(
-    format="%(asctime)s : %(levelname)s : %(message)s", level=logging.INFO
-)
-
-
-
-
-
-
-def print_memory_usage():
-    logging.info(f"RAM memory % used: {psutil.virtual_memory()[2]}")
 
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True, max_entries=1)
