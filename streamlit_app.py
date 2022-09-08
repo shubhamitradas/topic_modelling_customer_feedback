@@ -44,7 +44,7 @@ def main():
     )
 
     if st.button("Get Categories of feedback"):
-        print_memory_usage()
+        #print_memory_usage()
 
         st.text("Output")
         with st.spinner("Analysing the feedback (This may take some time)"):
