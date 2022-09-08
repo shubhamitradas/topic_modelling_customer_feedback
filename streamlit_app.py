@@ -3,8 +3,7 @@ import gc
 import logging
 import os
 
-import pandas as pd
-import psutil
+
 import streamlit as st
 from PIL import Image
 from streamlit import components
