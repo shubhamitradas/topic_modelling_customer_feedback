@@ -42,10 +42,7 @@ def main():
         height=400,
         max_chars=850,
     )
-    text_output = st.text_area(
-        height=100,
-        max_chars=150,
-    )
+
     if st.button("Get Categories of feedback"):
         #print_memory_usage()
 
