@@ -42,15 +42,18 @@ def main():
         height=400,
         max_chars=850,
     )
-
+    text_output = st.text_area(
+        height=100,
+        max_chars=150,
+    )
     if st.button("Get Categories of feedback"):
         #print_memory_usage()
 
-        st.text("Output")
+        st.text_output("Output")
         with st.spinner("Analysing the feedback (This may take some time)"):
               output = backend.get_review_category()
-        st.markdown("#Topics extracted from the review:")
-        st.text(output)
+        #st.markdown("#Topics extracted from the review:")
+        st.text_output(output)
 
 if __name__ == "__main__":
     main()
