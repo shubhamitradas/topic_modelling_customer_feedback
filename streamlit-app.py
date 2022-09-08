@@ -9,8 +9,8 @@ import streamlit as st
 from PIL import Image
 from streamlit import components
 from streamlit.caching import clear_cache
-from transformers import AutoModelForSequenceClassification, AutoTokenizer
-from transformers_interpret import ZeroShotClassificationExplainer
+from ml_backend import ml_backend
+
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 logging.basicConfig(
@@ -18,90 +18,39 @@ logging.basicConfig(
 )
 
 
+
+
+
+
 def print_memory_usage():
     logging.info(f"RAM memory % used: {psutil.virtual_memory()[2]}")
 
 
 @st.cache(allow_output_mutation=True, suppress_st_warning=True, max_entries=1)
-def load_model(model_name):
-    return (
-        AutoModelForSequenceClassification.from_pretrained(model_name),
-        AutoTokenizer.from_pretrained(model_name),
-    )
 
 
 def main():
 
-    st.title("Zero Shot Classifier Interpetation Demo App")
-    st.info("This is based on [Transformer-interpret-streamlit](https://github.com/cdpierse/transformers-interpret-streamlit)")
+    st.title("Analysis of Customer feedbacks")
 
-    #image = Image.open("./images/tight@1920x_transparent.png")
-    #st.sidebar.image(image, use_column_width=True)
-    #st.sidebar.markdown(
-     #   "Check out the package on [Github](https://github.com/cdpierse/transformers-interpret)"
-    #)
-    #st.info(
-    #    "Due to limited resources only low memory models are available. Run this [app locally](https://github.com/cdpierse/transformers-interpret-streamlit) to run the full selection of available models. "
-    #)
-
-    # uncomment the options below to test out the app with a variety of classification models.
-    models = {
-     
-        "typeform/distilbert-base-uncased-mnli": "DistilBERT model finetuned on MNLI. The model is not case-sensitive.",
-        # "ProsusAI/finbert": "BERT model finetuned to predict sentiment of financial text. Finetuned on Financial PhraseBank data. Predicts positive/negative/neutral.",
-        "typeform/squeezebert-mnli": ""
-       
-    }
-    model_name = st.sidebar.selectbox(
-        "Choose a Zero Shot classification model", list(models.keys())
-    )
-    model, tokenizer = load_model(model_name)
-  
-    model.eval()
-    zero_shot_explainer = ZeroShotClassificationExplainer(model=model, tokenizer=tokenizer)
-
-        
-    labels = ['technology','sport','space','politics','medical','historical','graphics','food','entertainment']
-    explanation_classes = labels
-    explanation_class_choice = st.sidebar.selectbox(
-        "Available categories",
-        explanation_classes,
-    ) 
-
-    my_expander = st.expander(
-        "Click here for description of models and their tasks"
-    )
-    with my_expander:
-        st.json(models)
+    backend = ml_backend()
 
     # st.info("Max char limit of 350 (memory management)")
     text = st.text_area(
-        "Enter text to be interpreted",
-        "Toyota is to slash worldwide vehicle production by 40% in September because of the global microchip shortage.",
+        "Enter the Customer Feedback",
+        "I fell short with time management to complete all units on weekly basis due to holidays and also multiple issues with the courses access to start with and to add one more thing that till now I didn't receive my membership number",
         height=400,
         max_chars=850,
     )
 
-    if st.button("Interpret Text"):
+    if st.button("Get Categories of feedback"):
         print_memory_usage()
 
         st.text("Output")
-        with st.spinner("Interpreting your text (This may take some time)"):
-              word_attributions = zero_shot_explainer(
-                    text, labels = labels,internal_batch_size=2
-                    )
-        st.text("Predicted Category :")
-        st.text(zero_shot_explainer.predicted_label)
-        if word_attributions:
-            word_attributions_expander = st.expander(
-                "Click here for raw word attributions"
-            )
-            with word_attributions_expander:
-                st.json(word_attributions)
-            components.v1.html(
-                zero_shot_explainer.visualize()._repr_html_(), scrolling=True, height=350
-            )
-
+        with st.spinner("Analysing the feedback (This may take some time)"):
+              output = backend.generate_email()
+        st.markdown("#Topics extracted from the review:")
+        st.subheader(output)
 
 if __name__ == "__main__":
     main()
