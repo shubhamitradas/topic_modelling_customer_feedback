@@ -1,9 +1,10 @@
 import openai
 
+
     
 class ml_backend:
         
-    openai.api_key = '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'
+    openai.api_key = "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"
 
     def get_review_category(self,review):
         """Returns a generated an email using GPT3 with a certain prompt and starting sentence"""
