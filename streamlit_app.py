@@ -48,7 +48,7 @@ def main():
 
         st.text("Output")
         with st.spinner("Analysing the feedback (This may take some time)"):
-              output = backend.generate_email()
+              output = backend.get_review_category()
         st.markdown("#Topics extracted from the review:")
         st.subheader(output)
 
