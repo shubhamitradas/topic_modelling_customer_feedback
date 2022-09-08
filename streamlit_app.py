@@ -49,11 +49,11 @@ def main():
     if st.button("Get Categories of feedback"):
         #print_memory_usage()
 
-        st.text_output("Output")
+        st.text("Output")
         with st.spinner("Analysing the feedback (This may take some time)"):
-              output = backend.get_review_category()
+              output = backend.get_review_category(text)
         #st.markdown("#Topics extracted from the review:")
-        st.text_output(output)
+        st.text(output)
 
 if __name__ == "__main__":
     main()
