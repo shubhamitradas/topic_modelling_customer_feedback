@@ -1,10 +1,11 @@
 import openai
+import streamlit as st
 
 
     
 class ml_backend:
         
-    openai.api_key = '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'
+    openai.api_key = st.secrets["key"]
 
     def get_review_category(self,review):
         """Returns a generated an email using GPT3 with a certain prompt and starting sentence"""
