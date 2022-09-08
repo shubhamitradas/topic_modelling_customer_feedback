@@ -20,7 +20,6 @@ def main():
 
     # st.info("Max char limit of 350 (memory management)")
     text = st.text_area(
-        "Enter the Customer Feedback",
         "I fell short with time management to complete all units on weekly basis due to holidays and also multiple issues with the courses access to start with and to add one more thing that till now I didn't receive my membership number",
         height=200,
         max_chars=850,
@@ -30,8 +29,10 @@ def main():
         #print_memory_usage()
 
         st.write('Output:')
-        #with st.spinner("Analysing the feedback (This may take some time)"):
-        #     output = backend.get_review_category(text)
+        with st.spinner("Analysing the feedback (This may take some time)"):
+            output = backend.get_review_category(text)
+            
+        st.write(output)    
        
 
 if __name__ == "__main__":
