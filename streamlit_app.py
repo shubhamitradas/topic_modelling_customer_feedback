@@ -1,5 +1,3 @@
-
-
 import streamlit as st
 from PIL import Image
 from streamlit import components
@@ -20,19 +18,42 @@ def main():
 
     # st.info("Max char limit of 350 (memory management)")
     text = st.text_area(
-        "I fell short with time management to complete all units on weekly basis due to holidays and also multiple issues with the courses access to start with and to add one more thing that till now I didn't receive my membership number",
-        height=200,
-        max_chars=850,
+        "Customer feedback",
+        height=300,
+        max_chars=950,
     )
+    
+    option = st.selectbox(
+     'What do you want to know?',
+     ('Options','Get me the Key topics.', 'Mood of the review.', 'Potential steps to improve user experience.'))
 
-    if st.button("Get Categories of feedback"):
+    if option == "Get me the Key topics.":
         #print_memory_usage()
 
-        st.write('Output:')
-        with st.spinner("Analysing the feedback (This may take some time)"):
-            output = backend.get_review_category(text)
-            
-        st.write(output)    
+        with st.spinner("Analysing the text (This may take some time)"):
+            output = backend.get_review_category(text)  
+        
+        themes = output.split("Key topics:")  
+        print(themes)
+        items = themes[1]
+        values = items.split(";")
+        for item_values in values:
+           st.write(item_values)
+           
+    elif option == "Potential steps to improve user experience.":
+        #print_memory_usage()
+
+        with st.spinner("Analysing the text (This may take some time)"):
+            output = backend.get_improvement_steps(text)  
+        st.write(output)  
+        
+    elif option == "Mood of the review.":
+        #print_memory_usage()
+
+        with st.spinner("Analysing the text (This may take some time)"):
+            output = backend.get_review_mood(text)  
+        st.write(output)          
+ 
        
 
 if __name__ == "__main__":
