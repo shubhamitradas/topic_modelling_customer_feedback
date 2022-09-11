@@ -5,7 +5,7 @@ import streamlit as st
     
 class ml_backend:
         
-    openai.api_key = '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' #st.secrets["key"]
+    openai.api_key = st.secrets["key"]
     
 
     def get_review_category(self,review):
