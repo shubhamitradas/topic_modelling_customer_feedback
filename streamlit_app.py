@@ -25,7 +25,7 @@ def main():
     
     option = st.selectbox(
      'What do you want to know?',
-     ('Options','Get me the Key topics.', 'Mood of the review.', 'Potential steps to improve user experience.'))
+     ('Options','Get me the Key topics.', 'Mood of the review.','Get the postive and negative aspects.','Potential steps to improve user experience.'))
 
     if option == "Get me the Key topics.":
         #print_memory_usage()
@@ -52,7 +52,14 @@ def main():
 
         with st.spinner("Analysing the text (This may take some time)"):
             output = backend.get_review_mood(text)  
-        st.write(output)          
+        st.write(output)  
+        
+    elif option == "Get the postive and negative aspects.":
+        #print_memory_usage()
+
+        with st.spinner("Analysing the text (This may take some time)"):
+            output = backend.get_positve_negative_aspects(text)  
+        st.write(output)               
  
        
 
