@@ -40,6 +40,21 @@ class ml_backend:
        )
         return response.choices[0].text
     
+    def get_positve_negative_aspects(self,review):
+        """Returns postive and negative aspects from the review."""
+  
+        prompt_text= "Extract positive and negative aspects from the text :\n "
+        response = openai.Completion.create(
+        model="text-davinci-002",
+        prompt=  prompt_text + review,
+        temperature=0.7,
+        max_tokens=256,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0 
+       )
+        return response.choices[0].text
+    
     def get_review_mood(self,review):
         """Returns sentiment analysis of the review"""
   
