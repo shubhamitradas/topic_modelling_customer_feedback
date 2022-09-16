@@ -5,7 +5,7 @@ import streamlit as st
     
 class ml_backend:
         
-    openai.api_key = "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" #st.secrets["key"]
+    openai.api_key = "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" #st.secrets["key"]
     
 
     def get_review_category(self,review):
@@ -76,6 +76,21 @@ class ml_backend:
         """Returns a response text for the feedback.."""
   
         prompt_text= "Write a polite response for the following customer feedback.\n "
+        response = openai.Completion.create(
+        model="text-davinci-002",
+        prompt=  prompt_text + review,
+        temperature=0.7,
+        max_tokens=256,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0 
+       )
+        return response.choices[0].text
+    
+    def auto_tag(self,review):
+        """Returns a response text for the feedback.."""
+  
+        prompt_text= "Feedback:This new edition of the course has been very much a disappointment for me. The one I started in December 2020 was much more straightforward.  The contents are not complete and all this interactivity just makes the theory like a game.   The platform is confusing, things are not in the right place and it seems that information shared about where to look re the assessment results.   Each time I finish a topic, I need to come back to the dashboard to be able to continue another thing/ consult another topic.  The shared PowerPoint do not point well what is required in the assessments criteria.  I am very disappointed.\n\nTags:\n-Course\n-Platform\n-Shared PowerPoint\n-Assessment criteria.\n\nFeedback: "
         response = openai.Completion.create(
         model="text-davinci-002",
         prompt=  prompt_text + review,

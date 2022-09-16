@@ -30,6 +30,7 @@ def main():
       'Get the postive and negative aspects.',
       'Is the customer polite?',
       'Write a response for this review.',
+      'Auto Tag the feedback.',
       'Potential steps to improve user experience.'))
 
     if option == "Get me the Key topics.":
@@ -72,6 +73,13 @@ def main():
         with st.spinner("Analysing the text (This may take some time)"):
             output = backend.compose_response(text)  
         st.write(output)      
+        
+    elif option == "Auto Tag the feedback.":
+        #print_memory_usage()
+
+        with st.spinner("Analysing the text (This may take some time)"):
+            output = backend.auto_tag(text)  
+        st.write(output)        
         
     elif option == "Get the postive and negative aspects.":
         #print_memory_usage()
