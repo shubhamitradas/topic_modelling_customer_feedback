@@ -1,7 +1,6 @@
 import streamlit as st
-from PIL import Image
 from streamlit import components
-#from streamlit.caching import clear_cache
+from streamlit.caching import clear_cache
 from ml_backend import ml_backend
 
 
@@ -25,7 +24,13 @@ def main():
     
     option = st.selectbox(
      'What do you want to know?',
-     ('Options','Get me the Key topics.', 'Mood of the review.','Get the postive and negative aspects.','Potential steps to improve user experience.'))
+     ('Options',
+      'Get me the Key topics.', 
+      'Mood of the review.',
+      'Get the postive and negative aspects.',
+      'Is the customer polite?',
+      'Write a response for this review.',
+      'Potential steps to improve user experience.'))
 
     if option == "Get me the Key topics.":
         #print_memory_usage()
@@ -53,6 +58,20 @@ def main():
         with st.spinner("Analysing the text (This may take some time)"):
             output = backend.get_review_mood(text)  
         st.write(output)  
+        
+    elif option == "Is the customer polite?":
+        #print_memory_usage()
+
+        with st.spinner("Analysing the text (This may take some time)"):
+            output = backend.is_customer_polite(text)  
+        st.write(output)   
+        
+    elif option == "Write a response for this review.":
+        #print_memory_usage()
+
+        with st.spinner("Analysing the text (This may take some time)"):
+            output = backend.compose_response(text)  
+        st.write(output)      
         
     elif option == "Get the postive and negative aspects.":
         #print_memory_usage()
