@@ -19,7 +19,7 @@ def main():
     text = st.text_area(
         "Customer feedback",
         height=300,
-        max_chars=450,
+        max_chars=300,
     )
     
     option = st.selectbox(
